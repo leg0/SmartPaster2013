@@ -157,6 +157,39 @@ sb.AppendLine(""This has a 	 tab and """" quotes but this \t is not an escape"")
 ", result);
         }
 
+        [TestMethod]
+        public void TestStringLiteralCxx_escape_backslash()
+        {
+            var actual = SmartFormatter.LiterallyInCxx(@"\");
+            Assert.AreEqual("\"\\\\\"", actual);
+        }
 
+        [TestMethod]
+        public void TestStringLiteralCxx_escape_quote()
+        {
+            var actual = SmartFormatter.LiterallyInCxx("\"");
+            Assert.AreEqual("\"\\\"\"", actual);
+        }
+
+        [TestMethod]
+        public void TestStringLiteralCxx_escape_tab()
+        {
+            var actual = SmartFormatter.LiterallyInCxx("\t");
+            Assert.AreEqual("\"\\t\"", actual);
+        }
+
+        [TestMethod]
+        public void TestStringLiteralCxx_lines()
+        {
+            var actual = SmartFormatter.LiterallyInCxx("a\nb\r\nc");
+            Assert.AreEqual("\"a\"\r\n\"b\"\r\n\"c\"", actual);
+        }
+
+        [TestMethod]
+        public void TestStringLiteralCxx()
+        {
+            var actual = SmartFormatter.LiterallyInCxx(Original);
+            Assert.AreEqual("\"我给你一本书 。\"\r\n\"This has a \\t tab and \\\" quotes but this \\\\t is not an escape\"", actual);
+        }
     }
 }
